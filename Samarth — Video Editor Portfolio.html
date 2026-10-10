@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Samarth — Video Editor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#000;--deep:#830000;--mid:#BC0202;--hot:#FF0000;--fg:#f4f1f1;--mute:#9a8f8f;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:dark}
+html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:"Arial Narrow","Helvetica Neue Condensed",Arial,sans-serif;letter-spacing:.02em;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.serif{font-family:"Playfair Display",Georgia,serif;font-style:italic;font-weight:500;color:var(--hot);letter-spacing:0}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;display:flex;justify-content:space-between;align-items:center;padding:18px 6vw;background:rgba(0,0,0,.75);backdrop-filter:blur(10px);border-bottom:1px solid #1a0000;text-transform:uppercase;font-size:14px}
+nav b{font-size:18px;letter-spacing:.12em}nav b i{color:var(--hot);font-style:normal}
+nav div a{margin-left:26px;color:var(--mute);transition:color .2s}nav div a:hover{color:var(--hot)}
+.hero{min-height:88vh;display:flex;flex-direction:column;justify-content:center;padding:8vh 6vw;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;right:-15vw;top:5%;width:60vw;height:60vw;max-width:700px;max-height:700px;background:radial-gradient(circle,var(--deep) 0,rgba(131,0,0,.35) 40%,transparent 70%);filter:blur(30px);animation:pulse 6s ease-in-out infinite}
+@keyframes pulse{50%{transform:scale(1.12);opacity:.7}}
+.tag{color:var(--mid);text-transform:uppercase;font-size:14px;letter-spacing:.3em;margin-bottom:22px;position:relative}
+h1{margin:0;font-size:clamp(54px,12vw,170px);line-height:.92;text-transform:uppercase;font-weight:400;position:relative}
+h1 .serif{text-transform:none;display:block}
+.hero p{max-width:520px;color:var(--mute);font-size:19px;line-height:1.5;margin:28px 0 36px;position:relative}
+.btns{display:flex;gap:14px;flex-wrap:wrap;position:relative}
+.btn{padding:15px 30px;border:1px solid var(--mid);text-transform:uppercase;font-size:14px;letter-spacing:.15em;transition:.25s}
+.btn.fill{background:var(--hot);border-color:var(--hot);color:#000}
+.btn:hover{background:var(--deep);border-color:var(--deep);color:#fff;transform:translateY(-2px)}
+.strip{overflow:hidden;border-block:1px solid #260000;background:#0a0000;padding:16px 0;white-space:nowrap}
+.strip div{display:inline-block;animation:slide 28s linear infinite;text-transform:uppercase;font-size:22px;color:var(--deep)}
+.strip span{margin:0 22px}.strip em{color:var(--hot);font-style:normal}
+@keyframes slide{to{transform:translateX(-50%)}}
+section{padding:12vh 6vw 4vh}
+.sh{display:flex;align-items:baseline;gap:18px;margin-bottom:12px;flex-wrap:wrap}
+.sh small{color:var(--mid);letter-spacing:.3em;text-transform:uppercase;font-size:13px}
+h2{margin:0;font-size:clamp(34px,6vw,76px);text-transform:uppercase;font-weight:400;line-height:1}
+.brandline{color:var(--mute);margin:0 0 34px;font-size:17px;max-width:600px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,300px));gap:22px}
+.card{display:block;position:relative;aspect-ratio:9/16;border:1px solid #2a0000;overflow:hidden;background:linear-gradient(160deg,#1a0000 0,#000 60%);transition:.35s;opacity:0;transform:translateY(30px)}
+.card.in{opacity:1;transform:none}
+.card::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 70% 20%,var(--deep),transparent 60%);opacity:.7;transition:.4s}
+.card:hover{border-color:var(--hot);transform:translateY(-8px);box-shadow:0 18px 50px rgba(188,2,2,.35)}
+.card:hover::before{opacity:1;transform:scale(1.2)}
+.num{position:absolute;top:16px;left:18px;font-size:54px;line-height:1;color:rgba(255,255,255,.12)}
+.play{position:absolute;top:50%;left:50%;width:76px;height:76px;margin:-38px 0 0 -38px;border-radius:50%;background:var(--hot);display:grid;place-items:center;transition:.3s}
+.play::after{content:"";border-left:22px solid #000;border-block:13px solid transparent;margin-left:6px}
+.card:hover .play{transform:scale(1.15);background:#fff}
+.meta{position:absolute;left:0;right:0;bottom:0;padding:22px 18px;background:linear-gradient(transparent,#000 70%)}
+.meta h3{margin:0 0 6px;font-size:22px;text-transform:uppercase;font-weight:400}
+.meta span{color:var(--mid);font-size:13px;letter-spacing:.18em;text-transform:uppercase}
+.about{display:grid;grid-template-columns:1fr 1fr;gap:6vw;align-items:center}
+.about p{font-size:20px;line-height:1.6;color:#cfc6c6;margin:0 0 18px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.stats div{border:1px solid #2a0000;padding:28px 20px}
+.stats b{display:block;font-size:54px;font-weight:400;color:var(--hot)}
+.stats span{color:var(--mute);text-transform:uppercase;font-size:13px;letter-spacing:.18em}
+.contact{text-align:center;padding-bottom:12vh}
+.contact h2{font-size:clamp(40px,9vw,120px)}
+.mail{display:inline-block;margin:34px 0 22px;font-size:clamp(20px,4vw,40px);border-bottom:2px solid var(--hot);padding-bottom:6px;transition:.2s}
+.mail:hover{color:var(--hot)}
+.insta{display:block;color:var(--mute);font-size:20px}.insta:hover{color:var(--hot)}
+footer{border-top:1px solid #1a0000;padding:26px 6vw;color:var(--mute);font-size:13px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;text-transform:uppercase;letter-spacing:.12em}
+@media(max-width:760px){.about{grid-template-columns:1fr}nav div a:not(:last-child){display:none}.grid{grid-template-columns:repeat(2,1fr);gap:12px}.play{width:56px;height:56px;margin:-28px 0 0 -28px}.num{font-size:38px}.meta h3{font-size:16px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.card{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<nav><b>SAMARTH<i>.</i></b><div><a href="#work">Work</a><a href="#about">About</a><a href="#contact">Contact</a></div></nav>
+
+<header class="hero">
+  <div class="tag">Video Editor · Pune, India</div>
+  <h1>I cut stories<span class="serif">that move people.</span></h1>
+  <p>Reels, brand films and short-form edits with sharp pacing, clean cuts and a feel for what makes people stop scrolling.</p>
+  <div class="btns"><a class="btn fill" href="#work">See my work</a><a class="btn" href="#contact">Let's talk</a></div>
+</header>
+
+<div class="strip"><div id="marq"></div></div>
+
+<section id="work">
+  <div class="sh"><small>Selected work</small></div>
+  <h2>Brands I've <span class="serif">worked with</span></h2>
+</section>
+
+<!-- BRAND SECTIONS are generated from the BRANDS list in the script below -->
+<div id="brands"></div>
+
+<section id="about">
+  <div class="sh"><small>About</small></div>
+  <div class="about">
+    <div>
+      <h2>Behind <span class="serif">the edit</span></h2>
+    </div>
+    <div>
+      <p>I'm Samarth, a video editor and graphic designer based in Pune. I turn raw footage into reels that feel intentional, from the first frame to the last beat.</p>
+      <p>My edits pair strong rhythm with brand-first thinking, so every video looks good and does its job.</p>
+      <div class="stats" style="margin-top:28px">
+        <div><b id="cnt">5</b><span>Reels showcased</span></div>
+        <div><b id="bcnt">2</b><span>Brands</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="contact">
+  <div class="sh" style="justify-content:center"><small>Contact</small></div>
+  <h2>Have a project?<span class="serif" style="display:block">Let's make it count.</span></h2>
+  <a class="mail" href="mailto:samarthshingade8@gmail.com">samarthshingade8@gmail.com</a>
+  <a class="insta" href="https://www.instagram.com/kyssxmarth/" target="_blank" rel="noopener">Instagram — @kyssxmarth ↗</a>
+</section>
+
+<footer><span>© <span id="yr"></span> Samarth</span><span>Video Editor · Pune</span></footer>
+
+<script>
+/* ===== EDIT HERE: add / remove brands and reels ===== */
+const BRANDS=[
+  {name:"Kaashvi by Katariya Fashion",tag:"Fashion",desc:"Reels created for Kaashvi's fashion label.",
+   reels:[
+    {title:"Reel One",url:"https://www.instagram.com/reel/DdjLQRSK950/"},
+    {title:"Reel Two",url:"https://www.instagram.com/reel/Dcv8ezWEyf2/"}]},
+  {name:"Katariya Tradelink",tag:"Trade & Business",desc:"Brand reels created for Katariya Tradelink.",
+   reels:[
+    {title:"Reel One",url:"https://www.instagram.com/reel/DeCPfOut36o/"},
+    {title:"Reel Two",url:"https://www.instagram.com/reel/DeRrG-dubUZ/"},
+    {title:"Reel Three",url:"https://www.instagram.com/reel/DdJoDRsOe7T/"}]}
+];
+/* ==================================================== */
+const root=document.getElementById("brands");
+let total=0;
+BRANDS.forEach((b,bi)=>{
+  const s=document.createElement("section");
+  s.style.paddingTop="6vh";
+  const cards=b.reels.map((r,i)=>{total++;return `<a class="card" href="${r.url}" target="_blank" rel="noopener" aria-label="Watch ${r.title} on Instagram"><div class="num">${String(i+1).padStart(2,"0")}</div><div class="play"></div><div class="meta"><h3>${r.title}</h3><span>Watch on Instagram ↗</span></div></a>`}).join("");
+  s.innerHTML=`<div class="sh"><small>0${bi+1} · ${b.tag}</small></div><h2 style="font-size:clamp(28px,4.6vw,58px)">${b.name}</h2><p class="brandline">${b.desc}</p><div class="grid">${cards}</div>`;
+  root.appendChild(s);
+});
+document.getElementById("cnt").textContent=total;
+document.getElementById("bcnt").textContent=BRANDS.length;
+document.getElementById("yr").textContent=new Date().getFullYear();
+const words=["Video Editing","<em>Reels</em>","Brand Films","<em>Motion</em>","Color & Sound","<em>Storytelling</em>"];
+const m=words.map(w=>`<span>${w}</span>`).join("<span>✦</span>");
+document.getElementById("marq").innerHTML=m+"<span>✦</span>"+m+"<span>✦</span>";
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.15});
+document.querySelectorAll(".card").forEach((c,i)=>{c.style.transitionDelay=(i%3)*90+"ms";io.observe(c)});
+</script>
+</body>
+</html>
